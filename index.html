@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Rock, Paper, Scissors!</title>
+  </head>
+
+  <body>
+    <script>
+      // A function to randomly return rock, paper or scissors to simulate the computers turn.
+      function computerPlay() {
+        let randomNumber = Math.random(); // Generates a random number.
+        if (randomNumber < 0.33) {
+          return "Rock";
+        } else if (randomNumber < 0.66) {
+          return "Paper";
+        } else {
+          return "Scissors";
+        }
+      }
+
+      // A function that modifies a string such that only the first letter is capatilised - to be used to modify player inputs
+      function capatilise(string) {
+        let newString = string.charAt(0).toUpperCase(); // Transforming first character to uppercase
+        let stringLength = string.length; // Finds the length of the string for use with 'charAt'
+        let i = 1; // Initialising counter for 'while' loop
+        while (i < stringLength) { // Loop converts all subsequent characters to lowercase and adds to the newString variable
+          newString += string.charAt(i).toLowerCase();
+          i++;
+        }
+        return newString;
+      }
+
+      // A function to play a single round.
+      function playRound(playerSelection, computerSelection) {
+        let playerSelectionCapatilise = capatilise(playerSelection); // Modifies user input to be a capatilised string.
+        switch (playerSelectionCapatilise) { // Results of round; 0pts for loss, 1pt for draw, 2pts for win.
+          case "Rock":
+            if (computerSelection === "Paper") {
+              return 0;
+            } else if (computerSelection === "Scissors") {
+              return 2;
+            } else {
+              return 1;
+            }
+            break;
+          case "Paper":
+            if (computerSelection === "Rock") {
+              return 2;
+            } else if (computerSelection === "Scissors") {
+              return 0;
+            } else {
+              return 1;
+            }
+            break;
+          case "Scissors":
+            if (computerSelection === "Rock") {
+              return 0;
+            } else if (computerSelection === "Paper") {
+              return 2;
+            } else {
+              return 1;
+            }
+            break;
+        }
+      }
+
+      // A function to determine the winner of a 5 round game.
+      function getWinner(numWins, numDraws, numLosses) {
+        if (numWins > numLosses) {
+          return "Winner winner chicken dinner!";
+        } else if (numWins < numLosses) {
+          return "Wow - what a loser!";
+        } else {
+          return "We must battle it out again!";
+        }
+      }
+
+      // A function to play a five round game.
+      function playGame() {
+        let i = 0; // Initialising counter for while loop.
+        let numRounds = 5; // Setting the initial number of rounds remaining in the game.
+        let numWins = 0; // Initialising results tally.
+        let numDraws = 0; // Initialising results tally.
+        let numLosses = 0; // Initialising results tally.
+        while (i < numRounds) {
+          let playerSelection = prompt("Please make your round selection: Rock, Paper or Scissors?","");
+          switch (playRound(playerSelection, computerPlay())) {
+            case 2:
+              numWins += 1;
+              console.log("You won round number " + (i + 1) + ".");
+              break;
+            case 1:
+              numDraws += 1;
+              console.log("You drew round number " + (i + 1) + ".");
+              break;
+            case 0:
+              numLosses += 1;
+              console.log("You lost round number " + (i + 1) + ".");
+              break;
+            default:
+              alert("Invalid selection please play again.");
+              i--;
+          }
+          i++;
+        }
+        console.log("Number of wins: " + numWins + ". Number of draws: " + numDraws + ". Number of losses: " + numLosses + ".");
+        return getWinner(numWins, numDraws, numLosses);
+      }
+
+      // TESTING area
+    </script>
+  </body>
+</html>
